@@ -12,6 +12,7 @@
         "ecmaVersion": 2018,
         "sourceType": "module"
     },
+    "plugins": ["jest"],
     "rules": {
         "space-before-function-paren": ["error", {
             "anonymous": "always",
