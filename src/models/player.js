@@ -1,6 +1,6 @@
 'use strict'
 
-function Player(options = { computer: false }) {
+function Player(board, options = { computer: false }) {
   function attack({ enemyBoard, row, col }) {
     enemyBoard.receiveAttack(row, col)
   }
@@ -15,7 +15,7 @@ function Player(options = { computer: false }) {
     enemyBoard.receiveAttack(...attackPosition)
   }
 
-  return { attack, isComputer, autoPlay }
+  return { attack, isComputer, autoPlay, board }
 }
 
 export default Player

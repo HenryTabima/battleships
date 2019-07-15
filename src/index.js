@@ -1,23 +1,28 @@
 import './styles.scss'
+import DOMHandler from './DOMHandler'
+import Player from './models/player'
+import GameBoard from './models/gameBoard'
+import Ship from './models/ship'
 
-const mainContainer = document.getElementById('main')
-document.addEventListener('DOMContentLoaded', () => {
-  presentBoards()
-  presentBoards()
-})
+document.addEventListener('DOMContentLoaded', startGameLoop)
 
-function presentBoards() {
-  const compGrid = document.createElement('div')
-  compGrid.classList.add('board-container')
+let currentPlayer
 
-  let gridCells = ``
+function startGameLoop() {
+  const board1 = initBoard()
+  const board2 = initBoard()
+  const player1 = Player(board1)
+  const computer = Player(board2, { computer: true })
+  DOMHandler.init({ players: [player1, computer] })
+  currentPlayer = player1
+}
 
-  for (let i = 0; i < 100; i++) {
-    gridCells += `<div class="cell cell-${i}">cell-${i}</div>`
-  }
-  compGrid.innerHTML = gridCells
+function initBoard() {
+  const board = GameBoard(Ship)
+  board.positionShip({ shipLength: 4, orientation: 'vertical', row: 0, col: 0 })
+  return board
+}
 
-  mainContainer.appendChild(compGrid)
-
+function play() {
 
 }

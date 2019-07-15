@@ -4,7 +4,7 @@ const BOARD_SIZE = 10
 
 function GameBoard(shipModel) {
   const ships = []
-  const positions = Array.from({ length: BOARD_SIZE * BOARD_SIZE })
+  const positions = Array.from({ length: BOARD_SIZE * BOARD_SIZE }, () => false)
   const attackedPositions = []
 
   const computePosition = (row, col) => (row * BOARD_SIZE) + col

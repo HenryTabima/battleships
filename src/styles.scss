@@ -1,32 +1,37 @@
 *{
   padding: 0%;
   margin: 0%;
+  font-family: sans-serif;
 }
 .header{
   background: whitesmoke;
   height: 60px;
   margin-bottom: 20px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .main{
   display: flex;
-  width: 90%;
+  justify-content: space-around;
+  max-width: 1200px;
   margin: auto;
 
 
 
   .board-container{
-    display: grid; 
+    display: grid;
     grid-template-columns: repeat(10, 50px);
     grid-template-rows: repeat(10, 50px);
-    width: 100%;
+    justify-items: center;
 
     .cell{
       height: 100%;
       width: 100%;
-      border: 2px solid black;
-      // padding: 20px;
+      border: 1px solid black;
+      &.ship {
+        background-color: gray;
+      }
     }
   }
 }
-
