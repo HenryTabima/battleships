@@ -14,12 +14,12 @@ describe('GameBoard Factory', () => {
 
   it('receive attack function with a pair of coordinates', () => {
     board.receiveAttack(0, 0)
-    expect(board.getPositions()[0][0]).toBeTruthy()
+    expect(board.getPosition(0, 0)).toBeTruthy()
   })
   it('keep track of missed attacts so it can be displayed', () => {
-    expect(board.getPositions()[2][3]).toBeFalsy()
+    expect(board.getPosition(2, 3)).toBeFalsy()
     board.receiveAttack(2, 3)
-    expect(board.getPositions()[2][3]).toBeTruthy()
+    expect(board.getPosition(2, 3)).toBeTruthy()
   })
   it('report if a ship has been sunk or not', () => {
     board.positionShip({
