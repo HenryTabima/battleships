@@ -1,12 +1,12 @@
 'use strict'
 
-let mainContainer
+let gamePlayers
 
+let mainContainer
 function init({ players }) {
+  gamePlayers = players
   mainContainer = document.getElementById('main')
-  players.forEach(player => {
-    presentBoards(player)
-  })
+  render()
 }
 
 function presentBoards(player) {
@@ -15,20 +15,30 @@ function presentBoards(player) {
 
   // const isComputer = player.isComputer()
 
-  const boardState = player.board.getBoardState()
+  // const boardState = player.board.getBoardState()
 
   let gridCells = ``
 
-  for (let i = 0; i < 100; i++) {
-    const cell = boardState[i]
-    const isShip = typeof cell !== 'boolean' && !player.isComputer()
-    const shipClass = isShip ? 'ship' : ''
-    const orientationClass = isShip ? cell.orientation : ''
-    gridCells += `<div class="cell cell-${i} ${shipClass} ${orientationClass}"></div>`
+  for (let row = 0; row < 10; row++) {
+    for (let col = 0; col < 10; col++) {
+      const cell = player.board.getPosition(row, col)
+      const isShip = typeof cell !== 'boolean' && !player.isComputer()
+      const shipClass = isShip ? 'ship' : ''
+      const orientationClass = isShip ? cell.orientation : ''
+      gridCells += `<div class="cell ${shipClass} ${orientationClass}" ${player.isComputer() ? `onClick="document.exposedFunctions.play(${row},${col})` : ''}"></div>`
+    }
   }
+
   compGrid.innerHTML = gridCells
 
   mainContainer.appendChild(compGrid)
 }
 
-export default { init }
+function render() {
+  mainContainer.innerHTML = ''
+  gamePlayers.forEach(player => {
+    presentBoards(player)
+  })
+}
+
+export default { init, render }

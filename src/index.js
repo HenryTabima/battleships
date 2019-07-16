@@ -6,7 +6,12 @@ import Ship from './models/ship'
 
 document.addEventListener('DOMContentLoaded', startGameLoop)
 
+document.exposedFunctions = {
+  play
+}
+
 let currentPlayer
+let waitingPlayer
 
 function startGameLoop() {
   const board1 = initBoard()
@@ -16,6 +21,7 @@ function startGameLoop() {
   const computer = Player(board2, { computer: true })
   DOMHandler.init({ players: [player1, computer] })
   currentPlayer = player1
+  waitingPlayer = computer
 }
 
 function initBoard() {
@@ -56,6 +62,8 @@ function generateOrientation() {
   return orientations[Math.floor(Math.random() * 2)]
 }
 
-function play() {
-
+function play(row, col) {
+  currentPlayer.attack({ enemyBoard: waitingPlayer.board, row, col })
+  console.log(row, col)
+  DOMHandler.render()
 }
