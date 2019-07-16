@@ -22,22 +22,38 @@ function initBoard() {
   const board = GameBoard(Ship)
 
   const shipData = [
-    { shipLength: 3, orientation: 'vertical' },
-    { shipLength: 4, orientation: 'horizontal' },
-    { shipLength: 6, orientation: 'vertical' },
-    { shipLength: 5, orientation: 'horizontal' }
+    { shipLength: 5, orientation: generateOrientation() },
+    { shipLength: 4, orientation: generateOrientation() },
+    { shipLength: 3, orientation: generateOrientation() },
+    { shipLength: 3, orientation: generateOrientation() },
+    { shipLength: 2, orientation: generateOrientation() },
+    { shipLength: 2, orientation: generateOrientation() },
+    { shipLength: 2, orientation: generateOrientation() }
   ]
 
-  shipData.forEach(ship => {
-    board.positionShip({ ...ship, ...generatePositions(ship) })
+  shipData.forEach(({ shipLength, orientation }) => {
+    const { row, col } = generatePositions({ shipLength, orientation }, board)
+    board.positionShip({ shipLength, orientation, row, col })
   })
 
   return board
 }
-function generatePositions(ship) {
-  const row = Math.floor(Math.random() * (10 - ship.shipLength))
-  const col = Math.floor(Math.random() * (10 - ship.shipLength))
+function generatePositions({ shipLength, orientation }, board) {
+  let notDone = true
+  const rowSpan = orientation === 'horizontal' ? 10 - shipLength : 10
+  const colSpan = orientation === 'horizontal' ? 10 : 10 - shipLength
+  let row, col
+  while (notDone) {
+    row = Math.floor(Math.random() * rowSpan)
+    col = Math.floor(Math.random() * colSpan)
+    notDone = !board.validPosition({ shipLength, orientation, row, col })
+  }
   return { row, col }
+}
+
+function generateOrientation() {
+  const orientations = ['vertical', 'horizontal']
+  return orientations[Math.floor(Math.random() * 2)]
 }
 
 function play() {

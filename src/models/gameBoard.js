@@ -9,37 +9,32 @@ function GameBoard(shipModel) {
 
   const computePosition = (row, col) => (row * BOARD_SIZE) + col
 
-  function positionShip({ shipLength, orientation, row, col }) {
-    const ship = shipModel(shipLength)
+  function forEachCellPositionInShip({ shipLength, orientation, row, col }, cb) {
     const position = computePosition(row, col)
-    ships.push(ship)
     const INCREASER = orientation === 'horizontal' ? 1 : 10
     for (let i = 0; i < shipLength; i++) {
-      positions[position + (i * INCREASER)] = { ship, index: i }
+      const indexPosition = position + (i * INCREASER)
+      cb(positions[indexPosition], indexPosition, i)
     }
   }
 
-  function validPosition (ship, row, col) {
-    const { shipLength, orientation } = ship
-    const cell = getPosition(row, col)
-    if (cell !== false) {
-      return false
-    }
-    if (orientation === 'horizontal') {
-      for (let i = 1; i < shipLength; i++) {
-        const c = cell + i
-        if (c !== false) {
-          return false
-        }
-      }
-    } else {
-      for (let i = 1; i < shipLength; i++) {
-        const c = cell + 10
-        if (c !== false) {
-          return false
-        }
-      }
-    }
+  function positionShip({ shipLength, orientation, row, col }) {
+    const ship = shipModel(shipLength)
+    ships.push(ship)
+    forEachCellPositionInShip({ shipLength, orientation, row, col }, (cell, index, shipIndex) => {
+      positions[index] = { ship, index: shipIndex, orientation }
+    })
+  }
+
+  function validPosition({ shipLength, orientation, row, col }) {
+    const isInRange = orientation === 'horizontal'
+      ? (col + shipLength) <= BOARD_SIZE
+      : (row + shipLength) <= BOARD_SIZE
+    const cells = []
+    forEachCellPositionInShip({ shipLength, orientation, row, col }, (cell) => {
+      cells.push(cell)
+    })
+    return cells.every(cell => typeof cell === 'boolean') && isInRange
   }
 
   function receiveAttack(row, col) {
@@ -74,7 +69,7 @@ function GameBoard(shipModel) {
     return ships.every(ship => ship.isSunk())
   }
 
-  return { positionShip, getShips, getPosition, getBoardState, receiveAttack, allShipsSunk, getAvailablePositions }
+  return { positionShip, getShips, getPosition, getBoardState, receiveAttack, allShipsSunk, getAvailablePositions, validPosition }
 }
 
 export default GameBoard

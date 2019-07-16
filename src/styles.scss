@@ -26,11 +26,23 @@
     justify-items: center;
 
     .cell{
+      box-sizing: border-box;
       height: 100%;
       width: 100%;
       border: 1px solid black;
       &.ship {
-        background-color: gray;
+        $ship-color: gray;
+        $ship-border-color: #333;
+        $ship-border-tick: 4px;
+        background-color: $ship-color;
+        &.vertical {
+          border-left: $ship-border-tick solid $ship-border-color;
+          border-right: $ship-border-tick solid $ship-border-color;
+        }
+        &.horizontal {
+          border-top: $ship-border-tick solid $ship-border-color;
+          border-bottom: $ship-border-tick solid $ship-border-color;
+        }
       }
     }
   }

@@ -21,9 +21,10 @@ function presentBoards(player) {
 
   for (let i = 0; i < 100; i++) {
     const cell = boardState[i]
-    // false ; true ; { ship, index }
-    const shipClass = typeof cell !== 'boolean' && !player.isComputer() ? 'ship' : ''
-    gridCells += `<div class="cell cell-${i} ${shipClass}"></div>`
+    const isShip = typeof cell !== 'boolean' && !player.isComputer()
+    const shipClass = isShip ? 'ship' : ''
+    const orientationClass = isShip ? cell.orientation : ''
+    gridCells += `<div class="cell cell-${i} ${shipClass} ${orientationClass}"></div>`
   }
   compGrid.innerHTML = gridCells
 
