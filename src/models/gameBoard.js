@@ -41,6 +41,7 @@ function GameBoard(shipModel) {
     const pos = computePosition(row, col)
     if (positions[pos] && positions[pos].ship) {
       positions[pos].ship.hit(positions[pos].index)
+      console.log(positions[pos].ship, positions[pos].ship.getStatus())
     } else {
       positions[pos] = true
     }

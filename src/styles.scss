@@ -20,6 +20,7 @@
 
 
   .board-container{
+    margin: 10px;
     display: grid;
     grid-template-columns: repeat(10, 50px);
     grid-template-rows: repeat(10, 50px);
@@ -29,6 +30,11 @@
       box-sizing: border-box;
       height: 100%;
       width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem;
+      font-weight: bold;
       border: 1px solid black;
       &.ship {
         $ship-color: gray;
@@ -43,6 +49,15 @@
           border-top: $ship-border-tick solid $ship-border-color;
           border-bottom: $ship-border-tick solid $ship-border-color;
         }
+      }
+      &.red {
+        color: red;
+      }
+      &.sunk {
+        background-color: red;
+      }
+      &.clickable {
+        cursor: pointer;
       }
     }
   }

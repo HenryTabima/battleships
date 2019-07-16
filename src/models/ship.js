@@ -7,8 +7,8 @@ function Ship(length) {
     return positions.length
   }
 
-  function getStatus() {
-    return positions
+  function getStatus(pos = -1) {
+    return pos === -1 ? positions : positions[pos]
   }
 
   function hit(pos) {
