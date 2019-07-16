@@ -19,6 +19,29 @@ function GameBoard(shipModel) {
     }
   }
 
+  function validPosition (ship, row, col) {
+    const { shipLength, orientation } = ship
+    const cell = getPosition(row, col)
+    if (cell !== false) {
+      return false
+    }
+    if (orientation === 'horizontal') {
+      for (let i = 1; i < shipLength; i++) {
+        const c = cell + i
+        if (c !== false) {
+          return false
+        }
+      }
+    } else {
+      for (let i = 1; i < shipLength; i++) {
+        const c = cell + 10
+        if (c !== false) {
+          return false
+        }
+      }
+    }
+  }
+
   function receiveAttack(row, col) {
     const pos = computePosition(row, col)
     if (positions[pos] && positions[pos].ship) {
