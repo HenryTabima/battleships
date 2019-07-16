@@ -62,8 +62,23 @@ function generateOrientation() {
   return orientations[Math.floor(Math.random() * 2)]
 }
 
-function play(row, col) {
-  currentPlayer.attack({ enemyBoard: waitingPlayer.board, row, col })
-  console.log(row, col)
+function play(row = null, col = null) {
+  if (currentPlayer.isComputer()) {
+    currentPlayer.autoPlay(waitingPlayer.board)
+  } else {
+    currentPlayer.attack({ enemyBoard: waitingPlayer.board, row, col })
+  }
   DOMHandler.render()
+  if (waitingPlayer.board.allShipsSunk()) {
+    DOMHandler.displayWinnerMessage(currentPlayer)
+  } else {
+    togglePlayer()
+    if (currentPlayer.isComputer()) play()
+  }
+}
+
+function togglePlayer() {
+  const aux = currentPlayer
+  currentPlayer = waitingPlayer
+  waitingPlayer = aux
 }

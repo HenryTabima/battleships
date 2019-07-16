@@ -1,7 +1,5 @@
 'use strict'
 
-import { type } from "os";
-
 let gamePlayers
 
 let mainContainer
@@ -51,4 +49,10 @@ function render() {
   })
 }
 
-export default { init, render }
+function displayWinnerMessage(winner) {
+  const player = winner.isComputer() ? 'Computer' : 'Player'
+
+  mainContainer.innerHTML = `<h2>${player} Won!</h2>`
+}
+
+export default { init, render, displayWinnerMessage }
