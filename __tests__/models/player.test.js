@@ -22,7 +22,7 @@ describe('Player Factory', () => {
   })
 
   it('Player can be a computer a play random positions without repeat', () => {
-    player = Player({ computer: true })
+    player = Player(null, { computer: true })
     expect(player.isComputer()).toBe(true)
     const moves = board.getAvailablePositions()
     player.autoPlay(board)

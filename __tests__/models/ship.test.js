@@ -1,11 +1,7 @@
 import Ship from '../../src/models/ship'
 
 describe('Ship Factory', () => {
-  let ship
-
-  beforeEach(() => {
-    ship = Ship(3)
-  })
+  const ship = Ship(3)
 
   it('getLength return the length of the ship', () => {
     expect(ship.getLength()).toBe(3)
