@@ -1,7 +1,8 @@
 {
     "env": {
         "browser": true,
-        "es6": true
+        "es6": true,
+        "jest/globals": true
     },
     "extends": "standard",
     "globals": {
@@ -12,6 +13,12 @@
         "ecmaVersion": 2018,
         "sourceType": "module"
     },
+    "plugins": ["jest"],
     "rules": {
+        "space-before-function-paren": ["error", {
+            "anonymous": "always",
+            "named": "never",
+            "asyncArrow": "always"
+        }]
     }
 }
